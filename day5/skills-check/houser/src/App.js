@@ -11,7 +11,8 @@ class App extends Component {
     return (
       <HashRouter>
       <div className="App">
-      <Header></Header>
+      <Header>Header
+      </Header>
       <Link to="/">Dashboard</Link>
       <Link to="/wizard">Add Property</Link>
       {routes}

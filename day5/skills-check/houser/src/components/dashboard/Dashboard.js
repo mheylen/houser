@@ -13,6 +13,7 @@ export default class Dashboard extends Component {
       listings: []
     };
     this.getAllListings = this.getAllListings.bind(this);
+    this.deleteListings = this.deleteListings.bind(this);
   }
 
   componentDidMount(){
@@ -27,6 +28,14 @@ export default class Dashboard extends Component {
     });
   }
 
+  deleteListings(id){
+    Axios.delete(`/api/listings/${id}`).then(res => {
+      this.setState({
+        listings: res.data
+      });
+    });
+  }
+
 
 
     render() {
@@ -35,7 +44,7 @@ export default class Dashboard extends Component {
           return (
               <div>
                 Dashboard
-              <Link to ="/house"></Link>
+              <House></House>
               </div>
               );
             })

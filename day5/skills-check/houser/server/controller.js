@@ -25,21 +25,21 @@ module.exports = {
               .send({ message: "An Error has occurred on the server", err});
     });
 },
-    addListing(req, res) {
+    addListings(req, res) {
         const db = req.app.get("db");
         const {name, address, city, state, zipcode} = req.body;
-        db.add_product([name, address, city, state, zipcode])
+        db.add_listing([name, address, city, state, zipcode])
         .then(listings => {
-            res.status(200).send(products);
+            res.status(200).send(listings);
         })
         .catch(err => {
             console.error("Error in addListings sql", err);
             res
             .status(500)
-            .send({ message: "An error has occurred on the server"})
+            .send({ message: "An error has occurred on the server", err})
         })
     },
-    updateListing(req, res) {
+    updateListings(req, res) {
         let {id} = req.params;
         if (!id) {
             id = req.query.id;
@@ -50,8 +50,38 @@ module.exports = {
     .send({message: "Invalid or missing 'id' on request" });
 } 
 const db = req.app.get("db");
-const { name, address, city, state, zipcode } = req.body;   
+const { name, address, city, state, zipcode } = req.body; 
 
-}
+db.update_listing([name, address, city, state, zipcode])
+.then(listings => {
+    res.status(200).send(listings);
+})
+.catch(err => {
+    console.error("Error in updateListing sql", err);
+    res
+      .status(500)
+      .send({ message: "An Error has occurred on the server", err });
+  });
+},
+  deleteListing(req, res) {
+    let { id } = req.params;
+
+    if (!parseInt(id, 10)) {
+      return res
+        .status(400)
+        .send({ message: "Invalid or missing 'id' on request" });
     }
-
+    id = parseInt(id, 10);
+    const db = req.app.get("db");
+    db.delete_Listing([id])
+      .then(listings => {
+        res.status(200).send(listings);
+      })
+      .catch(err => {
+        console.error("Error in deleteListing sql", err);
+        res
+          .status(500)
+          .send({ message: "An Error has occurred on the server", err });
+      });
+    }
+}

@@ -14,6 +14,22 @@ constructor(props) {
   };
 }
 
+componentDidMount() {
+  const { id } = this.props.match.params;
+  if(id) {
+    axios.get(`/api/listings/${id}`).then(res=> {
+      const {name, address, city, state, zipcode} = res.data;
+      this.setState({
+        name,
+        address,
+        city,
+        state,
+        zipcode
+      });
+    });
+  }
+}
+
 addListings = () => {
 const {name, address, city, state, zipcode} = this.state;
 const payload = {
@@ -24,9 +40,18 @@ const payload = {
   zipcode
 };
 axios.post("/api/listings", payload).then(() => {
-  this.clearForm();
+  this.clearWizard();
   this.props.history.push("/")
 })
+};
+clearWizard = () => {
+  this.setState({
+  name: "",
+  address: "",
+  city: "",
+  state: "",
+  zipcode: 0
+  })
 }
 
 

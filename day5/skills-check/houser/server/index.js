@@ -18,7 +18,7 @@ app.get("/api/listings", controller.getListings);
 app.get("/api/listings/:id", controller.getOneListing);
 app.post("/api/listings",controller.addListings);
 app.put("/api/listings", controller.updateListings);
-app.put("/api/listings/:id", controller.updateProduct);
+app.put("/api/listings/:id", controller.updateListings);
 app.delete("/api/listings/:id", controller.deleteListing);
 
 
